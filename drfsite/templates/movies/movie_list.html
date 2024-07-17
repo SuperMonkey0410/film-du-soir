@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+                <div class="left-ads-display col-lg-9">
+                    <div class="row">
+                        {% for movie in movies %}
+                        <div class="col-md-4 product-men">
+                            <div class="product-shoe-info editContent text-center mt-lg-4">
+                                <div class="men-thumb-item">
+                                    <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
+                                </div>
+                                <div class="item-info-product">
+                                    <h4 class="">
+                                        <a href="{% url 'cinema:movie_detail' movie.slug %} " class="editContent">{{ movie.title }}</a>
+                                    </h4>
+
+                                    <div class="product_price">
+                                        <div class="grid-price">
+                                           <a href="{% url 'cinema:director' movie.director.slug %}">
+    <span class="money editContent">{{ movie.director }}</span>
+</a>
+                                        </div>
+                                    </div>
+                                    <ul class="stars">
+                                        <li><a href="#"><span class="fa fa-star" aria-hidden="true"></span></a></li>
+                                        <li><a href="#"><span class="fa fa-star" aria-hidden="true"></span></a></li>
+                                        <li><a href="#"><span class="fa fa-star-half-o" aria-hidden="true"></span></a>
+                                        </li>
+                                        <li><a href="#"><span class="fa fa-star-half-o" aria-hidden="true"></span></a>
+                                        </li>
+                                        <li><a href="#"><span class="fa fa-star-o" aria-hidden="true"></span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+{% endblock %}
+</html>

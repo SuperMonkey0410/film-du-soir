@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+{% block title %} {{ movie.title }} {% endblock  %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+    <link href=" {% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900"
+          rel="stylesheet">
+    <link rel="stylesheet" href="path/to/lightbox.css">
+<script src="path/to/jquery.min.js"></script>
+<script src="path/to/lightbox.js"></script>
+</head>
+<body>
+{% block header %}
+    {% include "movies/includes/header_red_curtains.html" %}
+        {% endblock %}
+
+    {% block content %}
+                <div class="left-ads-display col-lg-8">
+                    <div class="row">
+                        <div class="desc1-left col-md-6">
+                            <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="desc1-right col-md-6 pl-lg-4">
+                            <h3 class="editContent" style="outline: none; cursor: inherit;">
+                                {{ movie.title }}</h3>
+                            <h5 class="editContent">{{ movie.title }}</h5>
+                            <ul>
+                                <li style="list-style: none"><span><b>Выход:</b> {{ movie.data_of_release }}</span></li>
+                              <span><b>Оценки:</b>
+                                {% for grade in movie.grade.all %}
+                                  {{ grade.title }} - {{ grade.marks|floatformat:"1" }}
+                                  {% if not forloop.last %}/{% endif %}
+                                        {% endfor %} </span>
+                                <li style="list-style: none"><span><b>Страна:</b>
+                                {% for country in movie.country.all %}
+                                    {{ country.name }}
+                                {% endfor %}
+                                </span>
+                                </li>
+                                <li style="list-style: none">
+                                    <span><b>Режиссер:</b> {{ movie.director.name }}</span></li>
+                                <li style="list-style: none"><span><b>Актеры:</b>
+                                {% for actor in movie.actors.all  %}
+                                  {{ actor.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </span></li>
+                                <li style="list-style: none"><span><b>Жанр:</b>
+                                {% for genre in movie.genre.all %}
+                                    {{ genre.title }} {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                                </span>
+                                </li>
+
+
+                                <li style="list-style: none">
+                                    <a href="#"><b>Рейтинг:</b>
+                                    <span class="fa fa-star" aria-hidden="true"
+                                          style="outline: none; cursor: inherit;"></span>
+                                        <span class="fa fa-star" aria-hidden="true"
+                                              style="outline: none; cursor: inherit;"></span>
+                                        <span class="fa fa-star" aria-hidden="true"
+                                              style="outline: none; cursor: inherit;"></span>
+                                        <span class="fa fa-star" aria-hidden="true"
+                                              style="outline: none; cursor: inherit;"></span>
+                                        <span class="fa fa-star" aria-hidden="true"
+                                              style="outline: none; cursor: inherit;"></span>
+                                        <span class="editContent"
+                                              style="outline: none; cursor: inherit;">5.0</span>
+                                    </a>
+                                </li>
+                                <div class="share-desc">
+                                    <div class="share">
+                                        <h4 class="editContent"
+                                            style="outline: none; cursor: inherit;">
+                                            Share:</h4>
+                                        <ul class="w3layouts_social_list list-unstyled">
+                                            <li>
+                                                <a href="#" class="w3pvt_facebook editContent"
+                                                   style="outline: none; cursor: inherit;">
+                                                <span class="fa fa-facebook-f"
+                                                      style="outline: none; cursor: inherit;"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="w3pvt_twitter editContent"
+                                                   style="outline: none; cursor: inherit;">
+                                                <span class="fa fa-twitter"
+                                                      style="outline: none; cursor: inherit;"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="w3pvt_dribble editContent"
+                                                   style="outline: none; cursor: inherit;">
+                                                <span class="fa fa-dribbble"
+                                                      style="outline: none; cursor: inherit;"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="row sub-para-w3layouts mt-5">
+
+                        <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
+                            Кадры к фильму : {{ movie.title }}</h3>
+                        <p>
+                            {% for image in movie.movieshots_set.all %}
+                             <a href="{{ image.image.url }}" data-lightbox="movie-gallery">
+                            <img src="{{ image.image.url }}" class="img-fluid" alt="">
+                                </a>
+                            {% endfor %}
+
+
+                        <p class="editContent" style="outline: none; cursor: inherit;"> {{ movie.description |safe}}</p>
+
+<!--                            <iframe width="560" height="315"-->
+<!--                                    src="{{ movie.trailer }}"-->
+<!--                                    frameborder="0" allow="accelerometer; autoplay;-->
+<!--                                                                           encrypted-media; gyroscope; picture-in-picture"-->
+<!--                                    allowfullscreen>-->
+
+<!--                            </iframe>-->
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="single-form-left">
+                            <!-- contact form grid -->
+                            <div class="contact-single">
+                                <h3 class="editContent" style="outline: none; cursor: inherit;">
+                                    <span class="sub-tittle editContent"
+                                          style="outline: none; cursor: inherit;">02</span>Оставить отзыв</h3>
+                               <form action="{% url 'cinema:comment' movie.id %}" method="POST" class="mt-4">
+                            {% csrf_token %}
+                    <div class="form-group editContent" style="outline: none; cursor: inherit;">
+                        <label for="contactcomment" class="editContent" style="outline: none; cursor: inherit;">Ваш комментарий                                 *</label>
+                        <textarea class="form-control border" rows="5" id="contactcomment" name="text" required=""></textarea>
+                    </div>
+                    <div class="d-sm-flex">
+                        <div class="col-sm-6 form-group p-0 editContent" style="outline: none; cursor: inherit;">
+                            <label for="contactusername" class="editContent" style="outline: none; cursor: inherit;">Имя *</label>
+                            <input type="text" class="form-control border" id="contactusername" name="name" required="">
+                        </div>
+                        <div class="col-sm-6 form-group ml-sm-3 editContent" style="outline: none; cursor: inherit;">
+                            <label for="contactemail" class="editContent" style="outline: none; cursor: inherit;">Email *</label>
+                            <input type="email" class="form-control border" id="contactemail" name="email" required="">
+                        </div>
+                    </div>
+                     <button type="submit"
+                                class="mt-3 btn btn-success btn-block py-3">
+                            Отправить
+                        </button>
+                    </form>
+                </div>
+                <!--  //contact form grid ends here -->
+            </div>
+        </div>
+      {% for feedback in movie.feedback_set.all %}
+            <div class="media py-5">
+<img src="{% static 'img/carousel/Марта.jpg' %}" class="mr-3 img-fluid" alt="image" style="max-width: 8%; height: auto;">
+                <div class="media-body mt-4">
+                    <h5 class="mt-0 editContent">
+                        {{ feedback.name }}
+                    </h5>
+                    <p class="mt-2 editContent">
+                        {{ feedback.text }}
+                    </p>
+                      <p class="mt-3 editContent">
+                        {{ feedback.created_at }}
+                    </p>
+                     </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+    </section>
+{% endblock %}
+</body>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+<title>{% block title %}Film du Soir{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+    <link href=" {% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900"
+          rel="stylesheet">
+</head>
+{% block header %}
+{% include "movies/includes/header.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "movies/includes/left_side_bar.html" %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+
+{% block footer %}
+{% include "movies/includes/footer.html" %}
+{% endblock  %}

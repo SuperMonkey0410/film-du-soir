@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} {{ director.name }} {% endblock title %}
+{% block header %}
+    {% include "movies/includes/header_red_curtains.html" %} <!-- Если убрать хэдер будет карусель, но последние добавленные будут в норме -->
+        {% endblock %}
+        {% block content %}
+        <div class="left-ads-display col-lg-8">
+            <div class="row">
+                <div class="desc1-left col-md-6">
+                    <img src="{{ director.photo.url }}" class="img-fluid" alt="">
+                </div>
+                <div class="desc1-right col-md-6 pl-lg-4">
+                    <h3 class="editContent">
+                        {{ director.name }}
+                    </h3>
+                    <h5 class="editContent"></h5>
+                    <ul>
+                        <li>
+                            <span><b>День рождения:</b> {{ director.birthday }} </span></li>
+                        <li>
+                       <span><b>Режиссер:</b>
+                            {% for film in films %}
+                                <a href="{% url 'cinema:movie_detail' film.slug %} " class="editContent">{{ film.title }}</a>
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </span>
+                        </li>
+                        <li><span><b>Актер:</b>
+                        {% for movie in actor.film_actor.all %}
+                            {{ movie.title }}
+                        {% endfor %}
+                    </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row sub-para-w3layouts mt-5">
+                <h3 class="shop-sing editContent">
+                    О {{ director.biography }}
+                </h3>
+                <p class="editContent">
+                    {{ actor.description|safe }}
+                </p>
+            </div>
+        </div>
+        {% endblock %}
