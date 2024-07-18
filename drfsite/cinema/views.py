@@ -24,6 +24,7 @@ class MovieDetail(View):
 
 class AddReview(View):
     """Отзывы"""
+
     def post(self, request, pk):
         form = FeedbackForm(request.POST)
         movie = Film.objects.get(id=pk)
@@ -42,7 +43,17 @@ def get_director(request, slug_id):
     return render(request, 'movies/directors.html', context=context)
 
 
-def filter_genre(request, genre_slug):
-    genres = Film.objects.filter(genre__in=request.GET.get('genre'))
-    context = {'genre': genres}
-    return render(request, )
+def filter_genre(request):
+    director_list = request.GET.getlist("director")
+    genre_list = request.GET.getlist("genre")
+
+    queryset = Film.objects.all()
+
+    if director_list:
+        queryset = queryset.filter(director__in=director_list)
+
+    if genre_list:
+        for genre in genre_list:
+            queryset = queryset.filter(genre=genre)
+
+    return render(request, 'movies/filter.html', {'movies': queryset})
