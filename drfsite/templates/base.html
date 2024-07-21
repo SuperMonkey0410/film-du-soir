@@ -1,5 +1,7 @@
-<!DOCTYPE html>
 {% load static %}
+{% load my_tags %}
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <title>{% block title %}Film du Soir{% endblock %}</title>
@@ -11,6 +13,12 @@
     <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900"
           rel="stylesheet">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+            crossorigin="anonymous"/>
+    <script src="https://kit.fontawesome.com/c001ee46a7.js" crossorigin="anonymous"></script>
 </head>
 {% block header %}
 {% include "movies/includes/header.html" %}
@@ -23,7 +31,51 @@
 {% block content %}
 {% endblock %}
 
+{% block pagination %}
+ <!-- Пагинация -->
+        {% if movies.has_other_pages %}
+
+        <nav aria-label="Пример навигации по страницам">
+   <div class="container my-5">
+       <ul class="pagination center">
+
+       {% if movies.has_previous %}
+           <li class="page-item">
+      <a class="page-link" href="?{% change_params page=movies.previous_page_number %}" aria-label="Предыдущая">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+       {% endif %}
+           {% for page in movies.paginator.page_range %}
+           {% if movies.number == page %}
+   <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+           {% elif page >= movies.number|add:-3 and page <= movies.number|add:3 %}
+    <li class="page-item"><a class="page-link" href="?{% change_params page=page %}">{{ page }}</a></li>
+           {% endif %}
+            {% endfor %}
+
+    {% if movies.has_next %}
+           <li class="page-item">
+      <a class="page-link" href="?{% change_params page=movies.next_page_number %}" aria-label="Следующая">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+    </div>
+</nav>
+    {% endif %}
+    {% endblock %}
+
+
 
 {% block footer %}
 {% include "movies/includes/footer.html" %}
 {% endblock  %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+  <script src="{% static "deps/js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "deps/js/jquery-ajax.js" %}"></script>
+</body>
+</html>

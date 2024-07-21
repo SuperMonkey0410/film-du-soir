@@ -1,5 +1,6 @@
 from django import template
 from cinema.models import Film, Genre, Director
+from django.utils.http import urlencode
 
 register = template.Library()
 
@@ -20,3 +21,9 @@ def get_directors():
 def get_last_films(count=4):
     latest_films = Film.objects.order_by("-id")[:count]
     return {'latest_films': latest_films}
+
+@register.simple_tag(takes_context=True)
+def change_params(context, **kwargs):
+    query = context['request'].GET.dict()
+    query.update(kwargs)
+    return urlencode(query)

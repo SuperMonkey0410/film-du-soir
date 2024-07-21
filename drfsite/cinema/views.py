@@ -4,13 +4,17 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from .forms import FeedbackForm
+from django.core.paginator import Paginator
 
 
 class MovieList(View):
     def get(self, request):
         movies = Film.objects.all().order_by("-id")  # order_by ("?") - Сортировка по рандому
         # genres = Genre.objects.all()  # my_tags.py
-        context = {'movies': movies}  # 'genres': genres}
+        paginator = Paginator(movies, 9)
+        page = request.GET.get('page', 1)
+        page_obj = paginator.page(page)  # Номер  отображаемой страницы
+        context = {'movies': page_obj}
         return render(request, 'movies/movie_list.html', context=context)
 
 
