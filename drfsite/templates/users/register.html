@@ -1,143 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register</title>
-<style media="screen">
-  *,
-  *:before,
-  *:after {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  body {
-    background-color: #080710;
-    font-family: 'Poppins', sans-serif;
-    color: #ffffff;
-  }
-  .background {
-    width: 430px;
-    height: 520px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-  }
-  .background .shape {
-    position: absolute;
-    border-radius: 50%;
-  }
-  .shape:first-child {
-    background: linear-gradient(#1845ad, #23a2f6);
-    height: 200px;
-    width: 200px;
-    left: -80px;
-    top: -80px;
-  }
-  .shape:last-child {
-    background: linear-gradient(to right, #ff512f, #f09819);
-    height: 200px;
-    width: 200px;
-    right: -30px;
-    bottom: -80px;
-  }
-  form {
-    height: 520px;
-    width: 400px;
-    background-color: rgba(255, 255, 255, 0.13);
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-    padding: 50px 35px;
-  }
-  form h3 {
-    font-size: 32px;
-    font-weight: 500;
-    line-height: 42px;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  label {
-    display: block;
-    margin-top: 20px;
-    font-size: 16px;
-    font-weight: 500;
-  }
-  input {
-    display: block;
-    height: 50px;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.07);
-    border-radius: 3px;
-    padding: 0 10px;
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: 300;
-    color: #ffffff;
-  }
-  ::placeholder {
-    color: #e5e5e5;
-  }
-  button {
-    margin-top: 30px;
-    width: 100%;
-    background-color: #ffffff;
-    color: #080710;
-    padding: 15px 0;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none;
-  }
-  button:hover {
-    background-color: #f5f5f5;
-  }
-  .social {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-  }
-  .social div {
-    background-color: rgba(255, 255, 255, 0.27);
-    color: #eaf0fb;
-    text-align: center;
-    width: 150px;
-    border-radius: 3px;
-    padding: 5px 10px;
-    margin: 0 10px;
-    cursor: pointer;
-  }
-  .social div:hover {
-    background-color: rgba(255, 255, 255, 0.47);
-  }
-</style>
-</head>
-<body>
-<div class="background">
-  <div class="shape"></div>
-  <div class="shape"></div>
-  <form>
-    <h3>User Registration</h3>
-    <label for="username">Username</label>
-    <input type="text" id="username" placeholder="Enter your username">
-    <label for="email">Email</label>
-    <input type="email" id="email" placeholder="Enter your email">
-    <label for="password">Password</label>
-    <input type="password" id="password" placeholder="Enter your password">
-    <button type="submit">Register</button>
-    <div class="social">
-      <div class="fb"><i class="fab fa-facebook-f"></i>Facebook</div>
-      <div class="tw"><i class="fab fa-twitter"></i>Twitter</div>
+       {% load static %}
+        {% block css_additional %}
+             <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+        {% endblock %}
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block content %}
+<body class="bg-primary">
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert"
+                             style="margin-top: 50px;">
+                            <strong>Hola Muchachos!</strong> Наши фильмы ждут не дождутся вашей регистрации!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Создать аккаунт</h3>
+                            </div>
+                            <div class="card-body">
+                                <form action='{% url "users:register" %}' method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="id_first_name">Имя</label>
+                                                <input class="form-control py-4" id="id_first_name" type="text"
+                                                       name="first_name"
+                                               value="{% if form.first_name.value %} {{ form.first_name.value }} {% endif %}"
+                                                       placeholder="Введите имя"/>
+                                                {% if form.first_name.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="id_last_name">Фамилия</label>
+                                                <input class="form-control py-4" id="id_last_name" type="text"
+                                                       name="last_name"
+                                               value="{% if form.last_name.value %} {{ form.last_name.value }} {% endif %}"
+                                                       placeholder="Введите фамилию"/>
+                                                {% if form.last_name.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="id_username">Имя пользователя</label>
+                                            <input class="form-control py-4" id="id_username" type="text"
+                                                   aria-describedby="usernameHelp"
+                                                   name="username"
+                                            value="{% if form.username.value %} {{ form.username.value }} {% endif %}"
+                                                   placeholder="Введите имя пользователя"/>
+                                            {% if form.username.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.username.errors}}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="id_email">Адрес электронной
+                                                почты</label>
+                                            <input class="form-control py-4" id="id_email" type="email"
+                                                   aria-describedby="emailHelp"
+                                                   name="email"
+                                          value="{% if form.email.value %} {{ form.email.value }} {% endif %}"
+                                                   placeholder="Введите адрес эл. почты"/>
+                                            {% if form.email.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.email.errors}}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="id_password1">Пароль</label>
+                                                <input class="form-control py-4" id="id_password1" type="password"
+                                                       name="password1"
+                                          value="{% if form.password1.value %} {{ form.password1.value }} {% endif %}"
+                                                       placeholder="Введите пароль"/>
+                                                 {% if form.password1.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.password1.errors}}</div>
+                                                 {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="id_password2">Подтверждение
+                                                    пароля</label>
+                                                <input class="form-control py-4" id="id_password2"
+                                                       type="password"
+                                                       name="password2"
+                                            value="{% if form.password2.value %} {{ form.password2.value }} {% endif %}"
+                                                       placeholder="Подтвердите пароль"/>
+                                                 {% if form.password2.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show">{{form.password2.errors}}</div>
+                                                 {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-4 mb-0">
+                                        <input class="gradient-button" type="submit" value="Создать аккаунт">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="small"><a href="{% url 'users:login' %}">Уже есть аккаунт? Авторизоваться</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-  </form>
 </div>
-</body>
-</html>
+{% endblock %}
+
+{% block footer %} {% endblock %}

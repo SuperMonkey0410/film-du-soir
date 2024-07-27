@@ -13,7 +13,9 @@
     	<input type="text" name="username" placeholder="Username" required="required" />
         <input type="password" name="password" placeholder="Password" required="required" />
         <button type="submit" class="gradient-button">Войти</button>
-                <button type="submit" class="gradient-button">Зарегистрироваться</button>
+        <p></p>
+        <a href="{% url 'users:register' %}"
+        <button type="submit" class="gradient-button">Зарегистрироваться</button></a>
 
     </form>
 </div>
