@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'cinema.apps.CinemaConfig',
+    'users.apps.UsersConfig',
     'ckeditor',
     'ckeditor_uploader',
 
@@ -214,3 +215,6 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+#Users
+AUTH_USER_MODEL = 'users.User'

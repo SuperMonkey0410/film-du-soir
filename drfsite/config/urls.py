@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('', include('cinema.urls', namespace='cinema')),
+    path('users/', include('users.urls', namespace='users')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
 
